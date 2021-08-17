@@ -6,16 +6,14 @@ const Field = () => {
 	const [available, setAvailable] = useState(true);
 
 	return (
-		<td>
-			<button
-				onClick={() => {
-					setAvailable(!available);
-				}}
-				className="field-btn"
-			>
-				{available || <FaCircle />}
-			</button>
-		</td>
+		<button
+			onClick={() => {
+				setAvailable(!available);
+			}}
+			className="field-btn"
+		>
+			{available || <FaCircle />}
+		</button>
 	);
 };
 

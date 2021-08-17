@@ -6,7 +6,7 @@ const Grid = () => {
 	const renderGrid = () => {
 		let rows = [];
 		for (let index = 0; index < 15; index++) {
-			rows.push(<tr className="grid-row">{renderRow()}</tr>);
+			rows.push(<div className="grid-row">{renderRow()}</div>);
 		}
 		return rows;
 	};
@@ -19,11 +19,7 @@ const Grid = () => {
 		return row;
 	};
 
-	return (
-		<table className=" grid center">
-			<tbody>{renderGrid()}</tbody>
-		</table>
-	);
+	return <div>{renderGrid()}</div>;
 };
 
 export default Grid;
