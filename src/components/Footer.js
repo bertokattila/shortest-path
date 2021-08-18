@@ -6,7 +6,11 @@ const Footer = () => {
 	return (
 		<footer>
 			<p>
-				Created with <FaReact className="react-icon" /> by Attila Bertók{" "}
+				Created with{" "}
+				<a href="https://reactjs.org">
+					<FaReact className="react-icon" />
+				</a>{" "}
+				by Attila Bertók
 			</p>
 			<div className="personal-links">
 				<a href="https://github.com/bertokattila">
