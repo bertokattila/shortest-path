@@ -6,11 +6,12 @@ const Grid = ({ gridData, fieldStateSetter }) => {
 	const [mouseState, setMouseState] = useState(false);
 
 	const renderGrid = () => {
+		const size = Math.sqrt(gridData.length);
 		let rows = [];
-		for (let rowIndex = 0; rowIndex < 15; rowIndex++) {
+		for (let rowIndex = 0; rowIndex < size; rowIndex++) {
 			let row = [];
-			for (let colIndex = 0; colIndex < 15; colIndex++) {
-				let id = rowIndex * 15 + colIndex;
+			for (let colIndex = 0; colIndex < size; colIndex++) {
+				let id = rowIndex * size + colIndex;
 				row.push(
 					<Field
 						key={id}

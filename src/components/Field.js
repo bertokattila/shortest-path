@@ -6,23 +6,21 @@ const Field = ({ id, fieldData, fieldStateSetter, mouseState }) => {
 	/*
 	Using state as a copy of the upper level data
 	*/
-	const [available, setAvailable] = useState(fieldData.getAvailable());
+	const [data] = useState(fieldData);
 
 	return (
 		<button
-			onClick={() => {
-				fieldStateSetter(id, !available);
-				setAvailable(!available);
+			onMouseDown={() => {
+				fieldStateSetter(id, !data.getAvailable());
 			}}
 			onMouseEnter={() => {
 				if (mouseState) {
-					fieldStateSetter(id, !available);
-					setAvailable(!available);
+					fieldStateSetter(id, !data.getAvailable());
 				}
 			}}
 			className="field-btn"
 		>
-			{available ? "" : <FaCircle />}
+			{data.getAvailable() ? "" : <FaCircle />}
 		</button>
 	);
 };

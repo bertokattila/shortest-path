@@ -20,5 +20,8 @@ class Vertex {
 	addNeighbour(neighbour) {
 		this.#Neighbours.push(neighbour);
 	}
+	getNeighbours() {
+		return this.#available;
+	}
 }
 export default Vertex;
