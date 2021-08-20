@@ -9,5 +9,16 @@
 	margin: 0;
 }
 .field-btn:hover {
-	background-color: var(--blueviolet-darker-color);
+	background-color: var(--cl-blueviolet-darker);
+}
+.end-flag {
+	font-size: xx-large;
+	color: var(--cl-main-bg);
+}
+.start-icon {
+	font-size: xx-large;
+	color: var(--cl-main-bg);
+}
+.path-icon {
+	color: var(--cl-green-darker);
 }

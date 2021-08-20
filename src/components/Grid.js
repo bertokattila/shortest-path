@@ -15,7 +15,6 @@ const Grid = ({ gridData, fieldStateSetter }) => {
 				row.push(
 					<Field
 						key={id}
-						id={id}
 						fieldData={gridData[id]}
 						fieldStateSetter={fieldStateSetter}
 						mouseState={mouseState}

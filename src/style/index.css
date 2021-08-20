@@ -3,14 +3,14 @@ Variables
 */
 
 :root {
-	/* background colors*/
-	--main-bg-color: rgb(39, 43, 61);
-	--main-text-color: rgb(169, 175, 202);
-	--main-text-darker-color: rgb(149, 155, 182);
-	--blueviolet-ligher-color: rgb(158, 63, 246);
-	--blueviolet-darker-color: rgb(118, 23, 206);
-	--green-darker-color: rgb(56, 134, 89);
-	--green-lighter-color: rgb(76, 154, 109);
+	/* colors*/
+	--cl-main-bg: rgb(39, 43, 61);
+	--cl-main-text: rgb(169, 175, 202);
+	--cl-main-text-darker: rgb(149, 155, 182);
+	--cl-blueviolet-ligher: rgb(158, 63, 246);
+	--cl-blueviolet-darker: rgb(118, 23, 206);
+	--cl-green-darker: rgb(56, 134, 89);
+	--cl-green-lighter: rgb(76, 154, 109);
 }
 
 body {
@@ -21,7 +21,7 @@ body {
 	-webkit-font-smoothing: antialiased;
 	-moz-osx-font-smoothing: grayscale;
 
-	background-color: var(--main-bg-color);
+	background-color: var(--cl-main-bg);
 	text-align: center;
 }
 
@@ -33,9 +33,9 @@ main {
 	text-align: center;
 }
 p {
-	color: var(--main-text-color);
+	color: var(--cl-main-text);
 }
 a {
 	text-decoration: none;
-	color: var(--main-text-color);
+	color: var(--cl-main-text);
 }

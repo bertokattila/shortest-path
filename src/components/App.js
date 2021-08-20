@@ -18,9 +18,16 @@ function App() {
 				available: true,
 				start: false,
 				end: false,
+				path: false,
 				neighbours: [],
 			});
 		}
+
+		// Setting the default endpoints
+		grid[grid.length - size].start = true;
+		grid[size - 1].end = true;
+
+		grid[50].path = true;
 
 		// For each node (field) setting the references of its neighbours
 		grid.forEach((node, index) => {
@@ -44,6 +51,7 @@ function App() {
 	Setting a field's available property
 	*/
 	const setFieldAvailable = (id, value) => {
+		if (gridData[id].start || gridData[id].end) return;
 		let gridDataCpy = gridData.slice();
 		gridDataCpy[id].available = value;
 		setGridData(gridDataCpy);
@@ -62,17 +70,32 @@ function App() {
 		}, 200);
 	};
 
+	const clearGrid = () => {
+		let gridDataCpy = gridData.slice();
+		gridDataCpy.forEach((field) => {
+			field.available = true;
+		});
+		setGridData(gridDataCpy);
+	};
+
 	return (
 		<>
+			<header>
+				<div className="align-container-container-lol">
+					<div className="align-container">
+						<h1 className="title">Shortest path generator</h1>
+					</div>
+				</div>
+			</header>
 			<main>
 				<Grid gridData={gridData} fieldStateSetter={setFieldAvailable} />
-				<div className="btn-container-container-lol">
-					<div className="btn-container">
+				<div className="align-container-container-lol">
+					<div className="align-container">
 						<button className="control-btn" onClick={startInterval}>
 							Generate
 							<FaPlay className="play-btn" />
 						</button>
-						<button className="control-btn" onClick={startInterval}>
+						<button className="control-btn" onClick={clearGrid}>
 							Clear
 						</button>
 					</div>
