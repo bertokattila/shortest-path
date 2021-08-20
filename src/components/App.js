@@ -1,7 +1,8 @@
 import Grid from "./Grid";
 import Footer from "./Footer";
-import Vertex from "../classes/Vertex";
-import { useState, useRef, useEffect } from "react";
+import { FaPlay } from "react-icons/fa";
+import { useState, useRef } from "react";
+import "../style/app.css";
 
 function App() {
 	/*
@@ -12,15 +13,22 @@ function App() {
 		const grid = [];
 		const size = 15;
 		for (let index = 0; index < Math.pow(size, 2); index++) {
-			grid.push(new Vertex(index));
+			grid.push({
+				id: index,
+				available: true,
+				start: false,
+				end: false,
+				neighbours: [],
+			});
 		}
 
 		// For each node (field) setting the references of its neighbours
 		grid.forEach((node, index) => {
-			index % size !== 0 && node.addNeighbour(grid[index - 1]); // left end
-			index % size !== size - 1 && node.addNeighbour(grid[index + 1]); // right end
-			index >= size && node.addNeighbour(grid[index - size]); // top end
-			index < Math.pow(size, 2) - size && node.addNeighbour(grid[index + size]); // bottom end
+			index % size !== 0 && node.neighbours.push(grid[index - 1]); // left end
+			index % size !== size - 1 && node.neighbours.push(grid[index + 1]); // right end
+			index >= size && node.neighbours.push(grid[index - size]); // top end
+			index < Math.pow(size, 2) - size &&
+				node.neighbours.push(grid[index + size]); // bottom end
 		});
 		return grid;
 	};
@@ -37,30 +45,40 @@ function App() {
 	*/
 	const setFieldAvailable = (id, value) => {
 		let gridDataCpy = gridData.slice();
-		gridDataCpy[id].setAvailable(value);
+		gridDataCpy[id].available = value;
 		setGridData(gridDataCpy);
 	};
 
 	const startInterval = () => {
 		timerRef.current = setInterval(function () {
-			setMyInterval((myInterval) => {
-				if (myInterval > -1) setFieldAvailable(myInterval + 1, false);
-				if (myInterval + 1 >= gridData.length - 1) {
+			setMyInterval((prevInterval) => {
+				if (prevInterval >= -1) setFieldAvailable(prevInterval + 1, false);
+				if (prevInterval + 1 >= gridData.length - 1) {
 					clearInterval(timerRef.current);
+					setMyInterval(-1);
 				}
-				return myInterval + 1;
+				return prevInterval + 1;
 			});
-		}, 1);
+		}, 200);
 	};
-
-	//useEffect(() => {}, [myInterval, gridData.length, setFieldAvailable]);
 
 	return (
 		<>
 			<main>
 				<Grid gridData={gridData} fieldStateSetter={setFieldAvailable} />
+				<div className="btn-container-container-lol">
+					<div className="btn-container">
+						<button className="control-btn" onClick={startInterval}>
+							Generate
+							<FaPlay className="play-btn" />
+						</button>
+						<button className="control-btn" onClick={startInterval}>
+							Clear
+						</button>
+					</div>
+				</div>
 			</main>
-			<button onClick={startInterval}>{myInterval}</button>
+
 			<Footer />
 		</>
 	);

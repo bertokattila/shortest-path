@@ -11,16 +11,16 @@ const Field = ({ id, fieldData, fieldStateSetter, mouseState }) => {
 	return (
 		<button
 			onMouseDown={() => {
-				fieldStateSetter(id, !data.getAvailable());
+				fieldStateSetter(id, !data.available);
 			}}
 			onMouseEnter={() => {
 				if (mouseState) {
-					fieldStateSetter(id, !data.getAvailable());
+					fieldStateSetter(id, !data.available);
 				}
 			}}
 			className="field-btn"
 		>
-			{data.getAvailable() ? "" : <FaCircle />}
+			{data.available ? "" : <FaCircle />}
 		</button>
 	);
 };
