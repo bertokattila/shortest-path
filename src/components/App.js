@@ -3,6 +3,8 @@ import Footer from "./Footer";
 import { FaPlay } from "react-icons/fa";
 import { useState, useRef } from "react";
 import "../style/app.css";
+import Header from "./Header";
+import BFS from "../classes/Bfs";
 
 function App() {
 	/*
@@ -24,10 +26,12 @@ function App() {
 		}
 
 		// Setting the default endpoints
-		grid[grid.length - size].start = true;
+		let start = grid.length - size;
+		grid[start].start = true;
 		grid[size - 1].end = true;
 
-		grid[50].path = true;
+		//grid[50].path = true;
+		BFS(grid, start);
 
 		// For each node (field) setting the references of its neighbours
 		grid.forEach((node, index) => {
@@ -80,13 +84,7 @@ function App() {
 
 	return (
 		<>
-			<header>
-				<div className="align-container-container-lol">
-					<div className="align-container">
-						<h1 className="title">Shortest path generator</h1>
-					</div>
-				</div>
-			</header>
+			<Header />
 			<main>
 				<Grid gridData={gridData} fieldStateSetter={setFieldAvailable} />
 				<div className="align-container-container-lol">
@@ -101,7 +99,6 @@ function App() {
 					</div>
 				</div>
 			</main>
-
 			<Footer />
 		</>
 	);
