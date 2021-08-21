@@ -13,9 +13,9 @@ function BFS(grid, start) {
 	while (queue.length > 0 && end === null) {
 		current = queue.shift();
 		current.neighbours.forEach((element, index, neighbours) => {
-			if (!neighbours[index].visited) {
+			if (!element.visited && element.available) {
 				neighbours[index].backTrace = current; // setting the path for backtrace
-				if (neighbours[index].end) {
+				if (element.end) {
 					end = neighbours[index];
 					return;
 				}
