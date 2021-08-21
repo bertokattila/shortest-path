@@ -4,9 +4,11 @@ import { FaPlay } from "react-icons/fa";
 import { useState, useRef } from "react";
 import "../style/app.css";
 import Header from "./Header";
-import BFS from "../classes/Bfs";
+import { BFS, backTrace } from "../classes/Bfs";
 
 function App() {
+	const [startIndex, setStartIndex] = useState(null);
+
 	/*
 	This function is only used at the time of the first render; creates the grid and sets all fields free of obstacles
 	Mathematically speaking it creates an unweighted graph which has a topology of a 15 X 15 grid
@@ -22,6 +24,8 @@ function App() {
 				end: false,
 				path: false,
 				neighbours: [],
+				visited: false,
+				backTrace: null,
 			});
 		}
 
@@ -29,9 +33,10 @@ function App() {
 		let start = grid.length - size;
 		grid[start].start = true;
 		grid[size - 1].end = true;
+		setStartIndex(start);
 
 		//grid[50].path = true;
-		BFS(grid, start);
+		//alert("init");
 
 		// For each node (field) setting the references of its neighbours
 		grid.forEach((node, index) => {
@@ -45,9 +50,11 @@ function App() {
 	};
 
 	/*
-	Stores the state of the grid
+	Setting up the grid with lazy initialization to avoid running at every re-render
+	more info: https://kentcdodds.com/blog/use-state-lazy-initialization-and-function-updates
 	*/
-	const [gridData, setGridData] = useState(initGrid());
+	const [gridData, setGridData] = useState(initGrid);
+
 	const [myInterval, setMyInterval] = useState(-1);
 	const timerRef = useRef(null);
 
@@ -60,8 +67,16 @@ function App() {
 		gridDataCpy[id].available = value;
 		setGridData(gridDataCpy);
 	};
+	const setFieldPath = (id, value) => {
+		if (gridData[id].start || gridData[id].end) return;
+		let gridDataCpy = gridData.slice();
+		gridDataCpy[id].path = value;
+		setGridData(gridDataCpy);
+	};
 
 	const startInterval = () => {
+		alert("init2");
+
 		timerRef.current = setInterval(function () {
 			setMyInterval((prevInterval) => {
 				if (prevInterval >= -1) setFieldAvailable(prevInterval + 1, false);
@@ -82,6 +97,13 @@ function App() {
 		setGridData(gridDataCpy);
 	};
 
+	const generateShortestPath = (grid, start) => {
+		let path = backTrace(BFS(grid, start));
+		path.forEach((id) => {
+			setFieldPath(id, true);
+		});
+	};
+
 	return (
 		<>
 			<Header />
@@ -89,7 +111,12 @@ function App() {
 				<Grid gridData={gridData} fieldStateSetter={setFieldAvailable} />
 				<div className="align-container-container-lol">
 					<div className="align-container">
-						<button className="control-btn" onClick={startInterval}>
+						<button
+							className="control-btn"
+							onClick={() => {
+								generateShortestPath(gridData, startIndex);
+							}}
+						>
 							Generate
 							<FaPlay className="play-btn" />
 						</button>

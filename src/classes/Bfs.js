@@ -1,22 +1,42 @@
-function trace(current) {
-	/*while (!currzent.end) {
-        current.neighbours.forEach(element => {
-            if(!element.visited)
-        });
-    }
-    */
-}
-
 function BFS(grid, start) {
-	// Creating a copy which can be safely modified during the algorithm
-	let graph = grid.slice();
-	graph.forEach((element) => {
-		element = { ...element, visited: false, backTrace: "null" };
-	});
+	let current = grid[start];
+	current.visited = true;
 
-	let root = { ...graph[start], visited: true };
+	let queue = []; // array used only as queue
 
-	let current = root;
-	console.log(current);
+	queue.push(current);
+
+	let iterations = 0;
+
+	let end = null;
+
+	while (queue.length > 0 && end === null) {
+		current = queue.shift();
+		current.neighbours.forEach((element, index, neighbours) => {
+			if (!neighbours[index].visited) {
+				neighbours[index].backTrace = current; // setting the path for backtrace
+				if (neighbours[index].end) {
+					end = neighbours[index];
+					return;
+				}
+				neighbours[index].visited = true;
+				queue.push(neighbours[index]);
+			}
+		});
+		iterations++;
+	}
+
+	return end;
 }
-export default BFS;
+
+const backTrace = (end) => {
+	let current = end.backTrace;
+	let path = [];
+	while (!current.start) {
+		path.push(current.id);
+		current = current.backTrace;
+	}
+	return path;
+};
+
+export { BFS, backTrace };
